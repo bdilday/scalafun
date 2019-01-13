@@ -1,0 +1,2 @@
+# scalafun
+fun with scala
