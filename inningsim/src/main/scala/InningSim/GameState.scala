@@ -31,6 +31,10 @@ case class GameState(base_outs: BaseOutState = BaseOutState(), score: Array[Int]
 trait EvolveState {
   self: GameState =>
   def evolve_state(ev: BatEvent): GameState = {
+    val b1 = self.base_outs.bases.bases.get(1).get
+    val b2 = self.base_outs.bases.bases.get(2).get
+    val b3 = self.base_outs.bases.bases.get(3).get
+    
     val bo = ev match {
       case xout() => {
         BaseOutState(
@@ -40,22 +44,22 @@ trait EvolveState {
       }
       case xbb() => {
         val x1 = 1
-        val x2: Int = if (self.base_outs.bases.bases.get(1).get == 1) 1 else 0
-        val x3: Int = if (self.base_outs.bases.bases.get(1).get == 1 && self.base_outs.bases.bases.get(2).get == 1) 1 else 0
+        val x2: Int = if (b1 == 1) 1 else b2
+        val x3: Int = if (b1 == 1 && b2 == 1) 1 else b3
         BaseOutState(
         BaseState(Map(1 -> x1, 2 -> x2, 3 -> x3)), self.base_outs.outs)
       }
       case x1b() => {
         val x1 = 1
-        val x2: Int = if (self.base_outs.bases.bases.get(1).get == 1) 1 else 0
-        val x3: Int = if (self.base_outs.bases.bases.get(1).get == 1 && self.base_outs.bases.bases.get(2).get == 1) 1 else 0
+        val x2: Int = if (b1 == 1) 1 else 0
+        val x3: Int = if (b2 == 1) 1 else 0
         BaseOutState(
           BaseState(Map(1 -> x1, 2 -> x2, 3 -> x3)), self.base_outs.outs)
       }
       case x2b() => {
         val x1 = 0
         val x2: Int = 1
-        val x3: Int = if (self.base_outs.bases.bases.get(1).get == 1) 1 else 0
+        val x3: Int = if (b1 == 1) 1 else 0
         BaseOutState(
           BaseState(Map(1 -> x1, 2 -> x2, 3 -> x3)), self.base_outs.outs)
       }

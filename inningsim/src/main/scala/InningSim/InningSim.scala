@@ -8,8 +8,8 @@ object InningSim {
     println("blah")
 
     val default_hit_probs = Array(0.08, 0.15, 0.05, 0.005, 0.035)
-    val batter_hit_probs = Array(0.08, 0.2, 0.05, 0.005, 0.035)
-    val pitcher_hit_probs = Array(0.08, 0.2, 0.05, 0.005, 0.05)
+    val batter_hit_probs = Array(0.25, 0.0, 0.0, 0.25, 0.0)
+    val pitcher_hit_probs = Array(0.25, 0.0, 0.0, 0.25, 0.0)
     val b = new Batter("generic001", "generic batter", batter_hit_probs)
     val p = new Pitcher("generic002", "generic pitcher", pitcher_hit_probs)
     val env = new RunEnvironment(default_hit_probs)
@@ -40,8 +40,9 @@ object InningSim {
           val mult = new breeze.stats.distributions.Multinomial[DenseVector[Double], Int](distribution_params)
           val ev = BatEvents.value(mult.draw())
 
-    val runs_arr = (1 to 300).par.map(_ => runs_from_state(current_state, mult)(0))
-    println(runs_arr.sum, runs_arr.length)
+    val runs_arr = (1 to 10000).par.map(_ => runs_from_state(current_state, mult)(0))
+    val runs_total = runs_arr.sum
+    println(runs_total, runs_arr.length, runs_total / (1.0 * runs_arr.length))
   }
 
 
