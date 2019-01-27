@@ -13,7 +13,7 @@ object InningSim {
     val b = new Batter("generic001", "generic batter", batter_hit_probs)
     val p = new Pitcher("generic002", "generic pitcher", pitcher_hit_probs)
     val env = new RunEnvironment(default_hit_probs)
-    println(b.probs)
+    //println(b.probs)
 
 
     val game_state = GameState()
@@ -40,7 +40,7 @@ object InningSim {
           val mult = new breeze.stats.distributions.Multinomial[DenseVector[Double], Int](distribution_params)
           val ev = BatEvents.value(mult.draw())
 
-    val runs_arr = (1 to 10000).par.map(_ => runs_from_state(current_state, mult)(0))
+    val runs_arr = (1 to 1000000).par.map(_ => runs_from_state(current_state, mult)(0))
     val runs_total = runs_arr.sum
     println(runs_total, runs_arr.length, runs_total / (1.0 * runs_arr.length))
   }
@@ -53,7 +53,7 @@ object InningSim {
       case _ => {
         val ev = BatEvents.value(mult.draw())
         val current_state = game_state.evolve_state(ev)
-        println(ev, game_state, current_state)
+        //println(ev, game_state, current_state)
         runs_from_state(current_state, mult)
       }
     }

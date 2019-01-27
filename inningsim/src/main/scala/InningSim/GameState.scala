@@ -34,7 +34,7 @@ trait EvolveState {
     val b1 = self.base_outs.bases.bases.get(1).get
     val b2 = self.base_outs.bases.bases.get(2).get
     val b3 = self.base_outs.bases.bases.get(3).get
-    
+
     val bo = ev match {
       case xout() => {
         BaseOutState(
